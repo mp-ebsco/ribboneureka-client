@@ -1,0 +1,105 @@
+buildscript {
+
+    ext {
+        snippetsDir = file('build/generated-snippets')
+        jfrogBuildInfoPluginVersion = '4.4.12'
+    }
+
+    repositories {
+        maven {
+            url 'https://eis.jfrog.io/eis/plugins-release'
+            credentials {
+                username = project.artifactory_user
+                password = project.artifactory_password
+            }
+        }
+    }
+
+    dependencies {
+
+        // The dependency management plugin changes Gradle’s handling of a pom’s exclusions so that they behave as they do in Maven.
+        // https://spring.io/blog/2015/02/23/better-dependency-management-for-gradle
+        classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
+    }
+}
+
+plugins {
+    // core plugins
+    id 'java'
+    id 'eclipse'
+    id 'maven'
+    id 'idea'
+
+    // Spring plugins
+    id "org.springframework.boot" version "1.4.3.RELEASE"
+    id "io.spring.dependency-management" version "0.6.0.RELEASE"
+}
+
+// Compilation settings
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+ext {
+    groupId					= 'com.mp.demo'
+    artifactId				= 'ribboneureka.client'
+    versionNumber			= '1.0'
+    jacksonVersion 			= '2.8r.5'
+}
+
+allprojects {
+    apply plugin: 'application'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-netflix:1.2.4.RELEASE"
+    }
+}
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testCompile "com.github.tomakehurst:wiremock-standalone:2.5.1"
+
+    // Spring-Cloud dependencies
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-eureka'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-ribbon'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-turbine'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-hystrix-dashboard'
+
+
+    // Jackson Dependencies
+    compile group: 'com.fasterxml.jackson.module', 		name: 'jackson-module-parameter-names', version: "${project.ext['jacksonVersion']}", transitive: true
+    compile group: 'com.fasterxml.jackson.datatype', 	name: 'jackson-datatype-jdk8', 			version: "${project.ext['jacksonVersion']}", transitive: true
+    compile group: 'com.fasterxml.jackson.datatype', 	name: 'jackson-datatype-jsr310',		version: "${project.ext['jacksonVersion']}", transitive: true
+
+    // Log4j2 Dependency for SLF4J and Asynchronous logging
+    compile group: 'com.lmax', name: 'disruptor', version: '3.3.6'
+}
+
+configurations.all {
+    exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+    exclude group: "ch.qos.logback", module: "logback-classic"
+}
+
+configurations {
+    runtime.exclude group:"ch.qos.logback", module: "logback-classic"
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
+}
+
+jar {
+    baseName = project.artifactId
+    version = project.versionNumber
+}
+
+run {
+    mainClassName = "ribboneureka.client.SearchApplication"
+}

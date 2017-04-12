@@ -1,0 +1,29 @@
+## Ribbon config for SearchAbstractLayerClient.  Example.  Needs to go into test config only
+server:
+  port: 8091
+
+platform.shared.ribboneurekademo.searchservice:
+  ribbon:
+    eureka:
+      enabled: true
+    ServerListRefreshInterval: 5000
+#   For Ribbon without Eureka, use a listOfServers and set enabled: false above
+#   listOfServers: localhost:8089
+#   ServerListRefreshInterval: 15000
+#   NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+
+searchservice:
+  vip: platform.shared.ribboneurekademo.searchservice
+
+searchclient:
+  useStubs: false
+
+#---
+#
+#spring:
+#  profiles: dev
+#
+#searchclient:
+#  useStubs: true
+#
+#---

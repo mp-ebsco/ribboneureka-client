@@ -1,0 +1,28 @@
+*.class
+*.jar
+*.war
+*.ear
+.*
+/build
+/classes
+/logs
+/bin
+/.gradle
+/data
+node_modules
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+# IntelliJ Files
+*.iml
+*.iws
+*.ipr
+
+*.log
