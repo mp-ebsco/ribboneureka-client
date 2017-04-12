@@ -1,20 +1,5 @@
 buildscript {
 
-    ext {
-        snippetsDir = file('build/generated-snippets')
-        jfrogBuildInfoPluginVersion = '4.4.12'
-    }
-
-    repositories {
-        maven {
-            url 'https://eis.jfrog.io/eis/plugins-release'
-            credentials {
-                username = project.artifactory_user
-                password = project.artifactory_password
-            }
-        }
-    }
-
     dependencies {
 
         // The dependency management plugin changes Gradle’s handling of a pom’s exclusions so that they behave as they do in Maven.
@@ -43,7 +28,7 @@ ext {
     groupId					= 'com.mp.demo'
     artifactId				= 'ribboneureka.client'
     versionNumber			= '1.0'
-    jacksonVersion 			= '2.8r.5'
+    jacksonVersion 			= '2.9.0.pr2'
 }
 
 allprojects {
