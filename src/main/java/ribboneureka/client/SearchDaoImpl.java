@@ -1,5 +1,6 @@
 package ribboneureka.client;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.apache.http.client.utils.URIBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,11 +29,17 @@ public class SearchDaoImpl implements SearchDao {
     private String searchVip;
 
     @Override
+    @HystrixCommand(fallbackMethod = "searchFallback")
     public SearchResponse getSearch(String query){
         try {
+            if (query.equalsIgnoreCase("boom")) {
+//                try { Thread.sleep(20000);} catch(InterruptedException ie){}
+                throw new RuntimeException("Boom goes the dynamite");
+            }
+
             final String url = new URIBuilder()
                     .setScheme("http").setHost(searchVip)
-                    .setPath("/" + query)
+                    .setPath("/search/" + query)
                     .build().toString();
             
             logger.info("url: {}", url);
@@ -46,5 +53,9 @@ public class SearchDaoImpl implements SearchDao {
             logger.error("Could not parse url", e);
             throw new RuntimeException(e);
         }
+    }
+
+    public SearchResponse searchFallback(String query) {
+        return new SearchResponse("<Failed to execute search>");
     }
 }

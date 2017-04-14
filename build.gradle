@@ -53,11 +53,13 @@ dependencies {
     testCompile "com.github.tomakehurst:wiremock-standalone:2.5.1"
 
     // Spring-Cloud dependencies
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-config'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-eureka'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-ribbon'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-turbine'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-hystrix-dashboard'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-hystrix'
 
 
     // Jackson Dependencies

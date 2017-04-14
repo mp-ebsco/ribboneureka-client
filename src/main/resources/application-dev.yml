@@ -16,14 +16,4 @@ searchservice:
   vip: platform.shared.ribboneurekademo.searchservice
 
 searchclient:
-  useStubs: false
-#
-#---
-#
-#spring:
-#  profiles: dev
-#
-#searchclient:
-#  useStubs: true
-#
-#---
+  useStubs: true
