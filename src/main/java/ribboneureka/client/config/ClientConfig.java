@@ -1,4 +1,4 @@
-package ribboneureka.client;
+package ribboneureka.client.config;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;

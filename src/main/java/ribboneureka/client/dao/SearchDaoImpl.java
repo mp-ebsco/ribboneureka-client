@@ -1,4 +1,4 @@
-package ribboneureka.client;
+package ribboneureka.client.dao;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.apache.http.client.utils.URIBuilder;
@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import ribboneureka.client.dto.SearchResponse;
 
 import java.net.URISyntaxException;
 

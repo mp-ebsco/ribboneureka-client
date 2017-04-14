@@ -5,6 +5,8 @@ import org.hamcrest.core.Is;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.springframework.beans.factory.annotation.Autowired;
+import ribboneureka.client.dao.SearchDaoImpl;
+import ribboneureka.client.dto.SearchResponse;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
