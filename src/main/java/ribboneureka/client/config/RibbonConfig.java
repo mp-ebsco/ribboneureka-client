@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
-@RibbonClient(name = "platform.shared.ribboneurekademo.searchservice")
+@RibbonClient(name = "platform.training.ribboneureka.searchservice")
 @Configuration
-public class ClientConfig {
+public class RibbonConfig {
   
     @LoadBalanced
     @Bean

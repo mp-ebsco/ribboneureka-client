@@ -2,28 +2,19 @@
 server:
   port: 8091
 
-platform.shared.ribboneurekademo.searchservice:
+platform.training.ribboneureka.searchservice:
   ribbon:
     eureka:
       enabled: true
     ServerListRefreshInterval: 5000
 #   For Ribbon without Eureka, use a listOfServers and set enabled: false above
-#   listOfServers: localhost:8089
+#   listOfServers: localhost:8089, localhost:8090
 #   ServerListRefreshInterval: 15000
 #   NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
 
+# This is a standard property specifying the VIP of the search service to avoid hard coding in the RestTemplate code
 searchservice:
-  vip: platform.shared.ribboneurekademo.searchservice
+  vip: platform.training.ribboneureka.searchservice
 
 searchclient:
   useStubs: false
-#
-#---
-#
-#spring:
-#  profiles: dev
-#
-#searchclient:
-#  useStubs: true
-#
-#---

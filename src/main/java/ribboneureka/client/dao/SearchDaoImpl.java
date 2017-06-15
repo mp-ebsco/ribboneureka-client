@@ -33,17 +33,17 @@ public class SearchDaoImpl implements SearchDao {
     @HystrixCommand(fallbackMethod = "searchFallback")
     public SearchResponse getSearch(String query){
         try {
+            // This simulates an error tripping the Hystrix Circuit Breaker
             if (query.equalsIgnoreCase("boom")) {
-//                try { Thread.sleep(20000);} catch(InterruptedException ie){}
                 throw new RuntimeException("Boom goes the dynamite");
             }
 
+            // Create the URL to access the ribboneureka-server service
+            // Notice the use of a VIP rather than an IP address
             final String url = new URIBuilder()
                     .setScheme("http").setHost(searchVip)
                     .setPath("/search/" + query)
                     .build().toString();
-            
-            logger.info("url: {}", url);
             
             ResponseEntity<SearchResponse> response = restTemplate.getForEntity(
                     url, SearchResponse.class);
@@ -56,6 +56,7 @@ public class SearchDaoImpl implements SearchDao {
         }
     }
 
+    // This is the Hystrix fallback method. Here we're returning a hardcoded response.
     public SearchResponse searchFallback(String query) {
         return new SearchResponse("<Failed to execute search>");
     }
